@@ -23,65 +23,58 @@ int countPairs2(int *arr, int len, int value) {
         count += n * (n - 1) / 2;
         break;
       } else {
-        int leftCount = 1;
-        int rightCount = 1;
-        while (left + 1 < right && arr[left] == arr[left + 1]) {
-          leftCount++;
-          left++;
+        int leftVal = arr[left];
+        int rightVal = arr[right];
+        int leftCount = 0;
+        int rightCount = 0;
+        while (left <= right && arr[left] == leftVal) {
+          ++leftCount;
+          ++left;
         }
-        while (right - 1 > left && arr[right] == arr[right -1]) {
-          rightCount++;
-          right--;
+        while (left <= right && arr[right] == rightVal) {
+          ++rightCount;
+          --right;
         }
         count += leftCount * rightCount;
-        left++;
-        right--;
       }
     } else if (sum < value) {
-      left++;
+      ++left;
     } else {
-      right--;
+      --right;
     }
   }
   return count;
 }
 int countPairs3(int *arr, int len, int value) {
   int count = 0;
-  for ( int i = 0; i < len; ++i) {
+  for (int i = 0; i < len; ++i) {
     int target = value - arr[i];
     int left = i + 1;
     int right = len - 1;
-    int firstPos = -1;
+    int pos = -1;
     while (left <= right) {
       int mid = left + (right - left) / 2;
       if (arr[mid] == target) {
-        firstPos = mid;
-        right = mid - 1;
+        pos = mid;
+        break;
       } else if (arr[mid] < target) {
         left = mid + 1;
       } else {
         right = mid - 1;
       }
     }
-    if (firstPos != -1) {
-      left = firstPos;
-      right = len - 1;
-      int lastPos = firstPos;
-      while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == target) {
-          lastPos = mid;
-          left = mid + 1;
-        } else if (arr[mid] < target) {
-          left = mid + 1;
-        } else {
-          right = mid - 1;
-        }
+    if (pos != -1) {
+      int firstPos = pos;
+      int lastPos = pos;
+      while (firstPos > i + 1 && arr[firstPos - 1] == target) {
+        --firstPos;
+      }
+      while (lastPos < len - 1 && arr[lastPos + 1] == target) {
+        ++lastPos;
       }
       count += (lastPos - firstPos + 1);
       i = lastPos;
     }
   }
-          
   return count;
 }
