@@ -90,7 +90,7 @@ int countPairs3(int *arr, int len, int value) {
       count += lenRange * (lenRange - 1) / 2;
       break;
     }
-    leftCount = 1;
+    int leftCount = 1;
     while (i + leftCount < len && arr[i + leftCount] == arr[i]) {
       leftCount++;
     }
