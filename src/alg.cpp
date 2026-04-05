@@ -1,5 +1,6 @@
 // Copyright 2021 NNTU-CS
 #include "alg.h"
+#include <algorithm>
 int countPairs1(int *arr, int len, int value) {
   int count = 0;
   for (int i = 0; i < len; ++i) {
